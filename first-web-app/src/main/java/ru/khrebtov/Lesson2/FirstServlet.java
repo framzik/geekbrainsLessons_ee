@@ -1,4 +1,4 @@
-package ru.khrebtov;
+package ru.khrebtov.Lesson2;
 
 import java.io.IOException;
 import javax.servlet.Servlet;
@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FirstServlet implements Servlet {
+
   private static final Logger logger = LoggerFactory.getLogger(FirstServlet.class);
   private ServletConfig config;
 
@@ -33,7 +34,7 @@ public class FirstServlet implements Servlet {
 
   @Override
   public String getServletInfo() {
-    return null;
+    return "firstServlet";
   }
 
   @Override
