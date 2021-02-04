@@ -1,4 +1,4 @@
-package ru.khrebtov.Lesson3.servlets.errors;
+package ru.khrebtov.Lesson2.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/forbidden")
-public class ErrorForbiddenServlet extends HttpServlet {
+
+@WebServlet(name = "main_servlet", urlPatterns = "/main")
+public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println("<h2>Отказанно в доступе, проверьте свои полномочия.</h2>");
+        resp.getWriter().println("<h1>Главная страница сайта.</h1>");
+        getServletContext().getNamedDispatcher("menu").include(req, resp);
     }
 }

@@ -1,4 +1,4 @@
-package ru.khrebtov.Lesson3.filters;
+package ru.khrebtov.Lesson2.filters;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

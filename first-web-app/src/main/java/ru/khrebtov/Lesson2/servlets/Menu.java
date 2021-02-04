@@ -1,4 +1,4 @@
-package ru.khrebtov.Lesson3.servlets;
+package ru.khrebtov.Lesson2.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
