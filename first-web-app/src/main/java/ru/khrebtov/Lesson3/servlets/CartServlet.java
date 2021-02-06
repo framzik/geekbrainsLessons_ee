@@ -1,17 +1,16 @@
-package ru.khrebtov.Lesson2.servlets;
+package ru.khrebtov.Lesson3.servlets;
 
+import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-@WebServlet(name = "catalog_servlet", urlPatterns = "/catalog")
-public class CatalogServlet extends HttpServlet {
+@WebServlet(name = "cart_servlet", urlPatterns = "/cart_servlet")
+public class CartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println("<h1>Каталог товаров</h1>");
-        getServletContext().getNamedDispatcher("menu").include(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/cart.jsp").forward(req,resp);
     }
 }
