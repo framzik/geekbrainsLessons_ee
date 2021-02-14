@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "Controller", urlPatterns = {"", "/main", "/catalog", "/product", "/cart",
+@WebServlet(name = "Controller", urlPatterns = {"", "/main", "/catalog", "/cart",
     "/order", "/company"})
 public class Controller extends HttpServlet {
 
@@ -25,13 +25,11 @@ public class Controller extends HttpServlet {
       url += "index.jsp";
     } else if (request.getServletPath().equals("/catalog")) {
       url += "catalog.jsp";
-    } else if (request.getServletPath().equals("/product")) {
-      url += "product.jsp";
     } else if (request.getServletPath().equals("/cart")) {
       url += "cart.jsp";
-    }else if (request.getServletPath().equals("/order")) {
+    } else if (request.getServletPath().equals("/order")) {
       url += "order.jsp";
-    }else if (request.getServletPath().equals("/company")) {
+    } else if (request.getServletPath().equals("/company")) {
       url += "company.jsp";
     }
     request.getRequestDispatcher(url).forward(request, response);

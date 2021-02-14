@@ -19,9 +19,8 @@
 </head>
 
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Товары</a>
+    <a class="navbar-brand" href="#">Категории</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -41,10 +40,9 @@
 
 <div class="container">
     <div class="row py-2">
-        <c:url value="/product/add" var="productAddUrl"/>
-
+        <c:url value="/category/add" var="categoryAddUrl"/>
         <div class="col-12">
-            <a class="btn btn-primary" href="${productAddUrl}">Add Product</a>
+            <a class="btn btn-primary" href="${categoryAddUrl}">Add Category</a>
         </div>
 
         <div class="col-12">
@@ -53,36 +51,28 @@
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Price</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="product" items="${requestScope.products}">
+                <c:forEach var="category" items="${requestScope.categories}">
                     <tr>
                         <th scope="row">
-                            <c:out value="${product.id}"/>
+                            <c:out value="${category.id}"/>
                         </th>
                         <td>
-                            <c:out value="${product.name}"/>
+                            <c:out value="${category.name}"/>
                         </td>
                         <td>
-                            <c:out value="${product.description}"/>
-                        </td>
-                        <td>$
-                            <c:out value="${product.price}"/>
-                        </td>
-                        <td>
-                            <c:url value="/product/edit" var="productEditUrl">
-                                <c:param name="id" value="${product.id}"/>
+                            <c:url value="/category/edit" var="categoryEditUrl">
+                                <c:param name="id" value="${category.id}"/>
                             </c:url>
-                            <a class="btn btn-success" href="${productEditUrl}"><i
+                            <a class="btn btn-success" href="${categoryEditUrl}"><i
                                     class="fas fa-edit"></i></a>
-                            <c:url value="/product/delete" var="productDeleteUrl">
-                                <c:param name="id" value="${product.id}"/>
+                            <c:url value="/category/delete" var="categoryDeleteUrl">
+                                <c:param name="id" value="${category.id}"/>
                             </c:url>
-                            <a class="btn btn-danger" href="${productDeleteUrl}"><i
+                            <a class="btn btn-danger" href="${categoryDeleteUrl}"><i
                                     class="far fa-trash-alt"></i></a>
                         </td>
                     </tr>

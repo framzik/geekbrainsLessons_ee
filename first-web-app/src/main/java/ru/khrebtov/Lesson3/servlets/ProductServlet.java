@@ -1,16 +1,96 @@
 package ru.khrebtov.Lesson3.servlets;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.khrebtov.Lesson3.entity.Product;
+import ru.khrebtov.Lesson3.repository.ProductRepository;
 
-@WebServlet(name = "product_servlet", urlPatterns = "/product_servlet")
+@WebServlet(urlPatterns = "/product/*")
 public class ProductServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/product.jsp").forward(req,resp);
+
+  private static final Logger logger = LoggerFactory.getLogger(ProductServlet.class);
+
+  private ProductRepository productRepository;
+
+  @Override
+  public void init() throws ServletException {
+    logger.info("Method init() ProductServlet...");
+    this.productRepository = (ProductRepository) getServletContext()
+        .getAttribute("productRepository");
+    if (productRepository == null) {
+      throw new ServletException("ProductRepository not initialized");
     }
+  }
+
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    logger.info(req.getPathInfo());
+    if (req.getPathInfo() == null || req.getPathInfo().equals("/")) {
+      req.setAttribute("products", productRepository.findAll());
+      getServletContext().getRequestDispatcher("/WEB-INF/product.jsp").forward(req, resp);
+    } else if (req.getPathInfo().equals("/edit")) {
+      long id;
+      try {
+        id = Long.parseLong(req.getParameter("id"));
+      } catch (NumberFormatException ex) {
+        resp.setStatus(400);
+        return;
+      }
+      Product product = productRepository.findById(id);
+      if (product == null) {
+        resp.setStatus(404);
+        return;
+      }
+      req.setAttribute("product", product);
+      getServletContext().getRequestDispatcher("/WEB-INF/product_form.jsp").forward(req, resp);
+    } else if (req.getPathInfo().equals("/delete")) {
+      long id;
+      try {
+        id = Long.parseLong(req.getParameter("id"));
+      } catch (NumberFormatException ex) {
+        resp.setStatus(400);
+        return;
+      }
+      productRepository.deleteById(id);
+      resp.sendRedirect(getServletContext().getContextPath() + "/product");
+    }else if(req.getPathInfo().equals("/add")){
+     Product newProduct = new Product();
+     productRepository.saveOrUpdate(newProduct);
+      req.setCharacterEncoding("UTF-8");
+      req.setAttribute("product", newProduct);
+      getServletContext().getRequestDispatcher("/WEB-INF/product_form.jsp").forward(req, resp);
+    }
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    long id;
+    try {
+      id = Long.parseLong(req.getParameter("id"));
+    } catch (NumberFormatException ex) {
+      resp.setStatus(400);
+      return;
+    }
+    BigDecimal price;
+    try {
+      price = new BigDecimal(req.getParameter("price"));
+    } catch (NumberFormatException ex) {
+      resp.setStatus(400);
+      return;
+    }
+    Product product = new Product(id, req.getParameter("name"), req.getParameter("description"),
+        price);
+    productRepository.saveOrUpdate(product);
+    resp.sendRedirect(getServletContext().getContextPath() + "/product");
+  }
+
 }
