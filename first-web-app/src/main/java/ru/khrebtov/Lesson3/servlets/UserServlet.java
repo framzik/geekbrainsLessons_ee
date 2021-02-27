@@ -58,9 +58,7 @@ public class UserServlet extends HttpServlet {
       userRepo.deleteById(id);
       resp.sendRedirect(req.getServletContext().getContextPath() + "/user");
     } else if (req.getPathInfo().equals("/add")) {
-      User newUser = new User();
-      userRepo.saveOrUpdate(newUser);
-      req.setAttribute("user", newUser);
+      req.setAttribute("user", new User());
       getServletContext().getRequestDispatcher("/WEB-INF/user_form.jsp").forward(req, resp);
     }
   }

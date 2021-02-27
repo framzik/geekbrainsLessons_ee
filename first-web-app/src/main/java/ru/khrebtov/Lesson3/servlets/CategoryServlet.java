@@ -56,9 +56,7 @@ public class CategoryServlet extends HttpServlet {
       categoryRepository.deleteById(id);
       resp.sendRedirect(req.getServletContext().getContextPath() + "/category");
     }else if(req.getPathInfo().equals("/add")){
-      Category newCategory = new Category();
-      categoryRepository.saveOrUpdate(newCategory);
-      req.setAttribute("category",newCategory);
+      req.setAttribute("category",new Category());
       getServletContext().getRequestDispatcher("/WEB-INF/category_form.jsp").forward(req, resp);
     }
   }

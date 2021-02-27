@@ -62,10 +62,7 @@ public class ProductServlet extends HttpServlet {
       productRepository.deleteById(id);
       resp.sendRedirect(getServletContext().getContextPath() + "/product");
     }else if(req.getPathInfo().equals("/add")){
-     Product newProduct = new Product();
-     productRepository.saveOrUpdate(newProduct);
-      req.setCharacterEncoding("UTF-8");
-      req.setAttribute("product", newProduct);
+      req.setAttribute("product", new Product());
       getServletContext().getRequestDispatcher("/WEB-INF/product_form.jsp").forward(req, resp);
     }
   }
