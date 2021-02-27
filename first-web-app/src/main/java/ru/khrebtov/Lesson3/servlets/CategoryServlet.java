@@ -64,9 +64,12 @@ public class CategoryServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    long id;
+    Long id = null;
     try {
-      id = Long.parseLong(req.getParameter("id"));
+      String strId = req.getParameter("id");
+      if (strId != null && !strId.isBlank()) {
+        id = Long.parseLong(strId);
+      }
     } catch (NumberFormatException e) {
       resp.setStatus(400);
       return;
