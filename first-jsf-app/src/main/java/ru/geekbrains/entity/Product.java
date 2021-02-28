@@ -1,7 +1,10 @@
 package ru.geekbrains.entity;
 
+import javax.inject.Inject;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import ru.geekbrains.controller.CategoryController;
+import ru.geekbrains.repository.CategoryRepository;
 
 @Entity
 @Table(name = "products")
@@ -25,6 +28,17 @@ public class Product {
   @Column
   private BigDecimal price;
 
+  //  @ManyToOne
+//  @JoinColumn(name = "category_id")
+//  private Category category;
+//
+//  public Category getCategory() {
+//    return category;
+//  }
+//
+//  public void setCategory(Category category) {
+//    this.category = category;
+//  }
   public Product() {
   }
 
