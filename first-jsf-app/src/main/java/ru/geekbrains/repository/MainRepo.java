@@ -1,11 +1,11 @@
 package ru.geekbrains.repository;
 
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface MainRepo<T> {
 
-  ArrayList<T> findAll();
+  List<T> findAll();
 
   T findById(Long id);
 

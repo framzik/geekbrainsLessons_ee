@@ -3,9 +3,10 @@ package ru.geekbrains.controller;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import ru.geekbrains.persist.User;
+import ru.geekbrains.entity.User;
 import ru.geekbrains.repository.UserRepository;
 
 @Named
@@ -15,6 +16,12 @@ public class UserController implements Serializable {
   private User user;
   @Inject
   private UserRepository userRepository;
+
+  private List<User> users;
+
+  public void preloadData(ComponentSystemEvent componentSystemEvent) {
+    users = userRepository.findAll();
+  }
 
   public User getUser() {
     return user;

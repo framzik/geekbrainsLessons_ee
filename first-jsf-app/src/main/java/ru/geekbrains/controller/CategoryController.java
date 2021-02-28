@@ -3,9 +3,10 @@ package ru.geekbrains.controller;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import ru.geekbrains.persist.Category;
+import ru.geekbrains.entity.Category;
 import ru.geekbrains.repository.CategoryRepository;
 
 @Named
@@ -15,6 +16,11 @@ public class CategoryController implements Serializable {
   @Inject
   private CategoryRepository categoryRepository;
   private Category category;
+  private List<Category> categories;
+
+  public void preloadData(ComponentSystemEvent componentSystemEvent) {
+    categories = categoryRepository.findAll();
+  }
 
   public Category getCategory() {
     return category;

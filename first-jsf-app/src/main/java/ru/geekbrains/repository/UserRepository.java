@@ -1,53 +1,73 @@
 package ru.geekbrains.repository;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
-import ru.geekbrains.persist.Product;
-import ru.geekbrains.persist.User;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import javax.transaction.UserTransaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.geekbrains.entity.User;
 
 @Named
 @ApplicationScoped
 public class UserRepository implements MainRepo<User> {
 
-  private final Map<Long, User> userMap = new ConcurrentHashMap<>();
+  private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
 
-  private final AtomicLong identity = new AtomicLong(0);
+  @PersistenceContext(name = "ds")
+  private EntityManager em;
+  @Resource
+  private UserTransaction ut;
 
   @PostConstruct
-  public void init() {
-    this.saveOrUpdate(new User(null, "Vasiliy", "+7(999) 999 99 99", "fr@ya.ru"));
-    this.saveOrUpdate(new User(null, "Petr", "+7(999) 999 99 98", "fr1@ya.ru"));
-    this.saveOrUpdate(new User(null, "Борис", "+7(999) 999 99 97", "fr2@ya.ru"));
+  public void init() throws Exception {
+    if (countAll() == 0) {
+      try {
+        ut.begin();
+        saveOrUpdate(new User(null, "Vasiliy", "+7(999) 999 99 99", "fr@ya.ru"));
+        saveOrUpdate(new User(null, "Petr", "+7(999) 999 99 98", "fr1@ya.ru"));
+        saveOrUpdate(new User(null, "Борис", "+7(999) 999 99 97", "fr2@ya.ru"));
+        ut.commit();
+      } catch (Exception ex) {
+        logger.error("", ex);
+        ut.rollback();
+      }
+    }
   }
 
 
   @Override
-  public ArrayList<User> findAll() {
-    return new ArrayList<>(userMap.values());
+  public List<User> findAll() {
+    return em.createNamedQuery("findAllUsers", User.class).getResultList();
   }
 
   @Override
   public User findById(Long id) {
-    return userMap.get(id);
+    return em.find(User.class, id);
   }
 
+  @Transactional
   @Override
   public void saveOrUpdate(User user) {
     if (user.getId() == null) {
-      Long id = identity.getAndIncrement();
-      user.setId(id);
+      em.persist(user);
     }
-    userMap.put(user.getId(), user);
+    em.merge(user);
   }
 
+  @Transactional
   @Override
   public void deleteById(Long id) {
-    userMap.remove(id);
+    em.createNamedQuery("deleteUserById").setParameter("id", id).executeUpdate();
   }
+
+  public Long countAll() {
+    return em.createNamedQuery("countAllUsers", Long.class).getSingleResult();
+  }
+
 }
