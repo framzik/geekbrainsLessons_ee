@@ -26,7 +26,7 @@ public class CategoryController implements Serializable {
 
   public String createCategory() {
     this.category = new Category();
-    return "/category_form.xhtml?faces-redirect-true";
+    return "/category_form.xhtml?faces-redirect=true";
   }
 
   public List<Category> getAllCategories() {
@@ -35,7 +35,7 @@ public class CategoryController implements Serializable {
 
   public String editCategory(Category category) {
     this.category = category;
-    return "/category_form.xhtml?faces-redirect-true";
+    return "/category_form.xhtml?faces-redirect=true";
   }
 
   public void deleteCategory(Category category) {
@@ -44,6 +44,6 @@ public class CategoryController implements Serializable {
 
   public String saveCategory() {
     categoryRepository.saveOrUpdate(category);
-    return "/category.xhtml?faces-redirect-true";
+    return "/category.xhtml?faces-redirect=true";
   }
 }

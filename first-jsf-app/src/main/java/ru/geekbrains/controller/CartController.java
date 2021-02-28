@@ -20,9 +20,8 @@ public class CartController implements Serializable {
 
   private Map<Long, Product> productMap = new HashMap<>();
 
-  public String addToCart(Product product) {
+  public void addToCart(Product product) {
     productMap.put(product.getId(), product);
-    return "/product.xhtml?faces-redirect-true";
   }
 
   public void removeFromCart(Product product) {
