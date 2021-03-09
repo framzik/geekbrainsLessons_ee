@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import ru.geekbrains.controller.CategoryController;
 import ru.geekbrains.repository.CategoryRepository;
+import ru.geekbrains.service.ProductRepr;
 
 @Entity
 @Table(name = "products")
@@ -28,17 +29,17 @@ public class Product {
   @Column
   private BigDecimal price;
 
-  //  @ManyToOne
-//  @JoinColumn(name = "category_id")
-//  private Category category;
-//
-//  public Category getCategory() {
-//    return category;
-//  }
-//
-//  public void setCategory(Category category) {
-//    this.category = category;
-//  }
+  @ManyToOne
+  private Category category;
+
+  public Category getCategory() {
+    return category;
+  }
+
+  public void setCategory(Category category) {
+    this.category = category;
+  }
+
   public Product() {
   }
 
@@ -47,6 +48,12 @@ public class Product {
     this.name = name;
     this.description = description;
     this.price = price;
+  }
+
+  public Product(ProductRepr productRepr, Category category) {
+    this(productRepr.getId(), productRepr.getName(), productRepr.getDescription(),
+        productRepr.getPrice());
+    this.category = category;
   }
 
   public Long getId() {
