@@ -34,13 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   @TransactionAttribute
   public void saveOrUpdate(CategoryRepr categoryRepr) {
-    if (categoryRepr != null) {
-      Category category = categoryRepository.getReference(categoryRepr.getId());
-      categoryRepository.saveOrUpdate(category);
-    } else {
-      categoryRepository.saveOrUpdate(new Category());
-    }
-
+    categoryRepository.saveOrUpdate(new Category(categoryRepr) );
   }
 
   @Override

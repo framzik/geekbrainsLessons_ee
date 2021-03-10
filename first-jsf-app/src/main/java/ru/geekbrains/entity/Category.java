@@ -11,6 +11,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import ru.geekbrains.service.DtoEntities.CategoryRepr;
 
 @Entity
 @Table(name = "categories")
@@ -45,6 +46,9 @@ public class Category {
   public Category(Long id, String name) {
     this.id = id;
     this.name = name;
+  }
+  public Category(CategoryRepr categoryRepr) {
+    this(categoryRepr.getId(), categoryRepr.getName());
   }
 
   public Long getId() {
