@@ -1,4 +1,4 @@
-package ru.geekbrains.service;
+package ru.geekbrains.service.serviceImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +11,9 @@ import ru.geekbrains.entity.Category;
 import ru.geekbrains.entity.Product;
 import ru.geekbrains.repository.CategoryRepository;
 import ru.geekbrains.repository.ProductRepository;
+import ru.geekbrains.service.DtoEntities.ProductRepr;
+import ru.geekbrains.service.ProductService;
+import ru.geekbrains.service.ProductServiceRemote;
 
 @Stateless
 public class ProductServiceImpl implements ProductService, ProductServiceRemote {
@@ -26,7 +29,7 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote 
     @Override
     public List<ProductRepr> findAll() {
         return productRepository.findAll().stream()
-                .map(product -> new ProductRepr(product))
+                .map(ProductRepr::new)
                 .collect(Collectors.toList());
     }
 

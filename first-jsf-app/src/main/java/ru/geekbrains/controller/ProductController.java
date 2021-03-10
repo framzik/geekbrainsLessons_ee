@@ -7,9 +7,9 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
-import ru.geekbrains.entity.Category;
-import ru.geekbrains.repository.CategoryRepository;
-import ru.geekbrains.service.ProductRepr;
+import ru.geekbrains.service.CategoryService;
+import ru.geekbrains.service.DtoEntities.CategoryRepr;
+import ru.geekbrains.service.DtoEntities.ProductRepr;
 import ru.geekbrains.service.ProductService;
 
 @Named
@@ -20,17 +20,17 @@ public class ProductController implements Serializable {
   private ProductService productService;
 
   @EJB
-  private CategoryRepository categoryRepository;
+  private CategoryService categoryService;
 
   private ProductRepr product;
 
   private List<ProductRepr> products;
 
-  private List<Category> categories;
+  private List<CategoryRepr> categories;
 
   public void preloadData(ComponentSystemEvent componentSystemEvent) {
     products = productService.findAll();
-    categories = categoryRepository.findAll();
+    categories = categoryService.findAll();
   }
 
   public ProductRepr getProduct() {
@@ -64,11 +64,11 @@ public class ProductController implements Serializable {
     return "/product.xhtml?faces-redirect=true";
   }
 
-  public List<Category> getCategories() {
+  public List<CategoryRepr> getCategories() {
     return categories;
   }
 
-  public void setCategories(List<Category> categories) {
+  public void setCategories(List<CategoryRepr> categories) {
     this.categories = categories;
   }
 }

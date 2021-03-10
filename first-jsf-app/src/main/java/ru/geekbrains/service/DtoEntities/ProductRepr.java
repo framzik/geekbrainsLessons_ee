@@ -1,4 +1,4 @@
-package ru.geekbrains.service;
+package ru.geekbrains.service.DtoEntities;
 
 import ru.geekbrains.entity.Category;
 import ru.geekbrains.entity.Product;

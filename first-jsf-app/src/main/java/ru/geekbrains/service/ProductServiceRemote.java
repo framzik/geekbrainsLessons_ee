@@ -1,15 +1,15 @@
 package ru.geekbrains.service;
 
-import javax.ejb.Local;
-import javax.ejb.Remote;
 import java.util.List;
+import javax.ejb.Remote;
+import ru.geekbrains.service.DtoEntities.ProductRepr;
 
-@Local
+@Remote
 public interface ProductServiceRemote {
 
-    List<ProductRepr> findAll();
+  List<ProductRepr> findAll();
 
-    ProductRepr findById(Long id);
+  ProductRepr findById(Long id);
 
-    Long countAll();
+  Long countAll();
 }

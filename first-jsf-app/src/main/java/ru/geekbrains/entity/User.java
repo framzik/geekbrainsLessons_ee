@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import ru.geekbrains.service.DtoEntities.UserRepr;
 
 @Entity
 @Table(name = "users")
@@ -36,6 +37,9 @@ public class User {
   }
 
   public User() {
+  }
+  public User(UserRepr userRepr) {
+    this(userRepr.getId(), userRepr.getName(), userRepr.getPhone(), userRepr.getEmail());
   }
 
   public Long getId() {

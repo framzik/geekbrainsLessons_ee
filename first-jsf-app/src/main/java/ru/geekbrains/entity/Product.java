@@ -1,11 +1,8 @@
 package ru.geekbrains.entity;
 
-import javax.inject.Inject;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import ru.geekbrains.controller.CategoryController;
-import ru.geekbrains.repository.CategoryRepository;
-import ru.geekbrains.service.ProductRepr;
+import ru.geekbrains.service.DtoEntities.ProductRepr;
 
 @Entity
 @Table(name = "products")
