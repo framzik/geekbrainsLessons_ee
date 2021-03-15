@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import ru.geekbrains.service.DtoEntities.UserRepr;
+import ru.geekbrains.DtoEntities.UserRepr;
 
 @Entity
 @Table(name = "users")

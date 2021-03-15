@@ -7,10 +7,10 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
-import ru.geekbrains.service.CategoryService;
-import ru.geekbrains.service.DtoEntities.CategoryRepr;
-import ru.geekbrains.service.DtoEntities.ProductRepr;
-import ru.geekbrains.service.ProductService;
+import ru.geekbrains.CategoryService;
+import ru.geekbrains.DtoEntities.CategoryRepr;
+import ru.geekbrains.ProductService;
+import ru.geekbrains.ProductRepr;
 
 @Named
 @SessionScoped

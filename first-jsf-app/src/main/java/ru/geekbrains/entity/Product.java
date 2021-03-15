@@ -1,8 +1,9 @@
 package ru.geekbrains.entity;
 
+import ru.geekbrains.ProductRepr;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
-import ru.geekbrains.service.DtoEntities.ProductRepr;
 
 @Entity
 @Table(name = "products")
