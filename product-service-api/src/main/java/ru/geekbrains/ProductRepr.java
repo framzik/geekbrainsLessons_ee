@@ -23,6 +23,15 @@ public class ProductRepr implements Serializable {
   public ProductRepr() {
   }
 
+  public ProductRepr(Long id, String name, String description, BigDecimal price, Long categoryId, String categoryName) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.price = price;
+    this.categoryId = categoryId;
+    this.categoryName = categoryName;
+  }
+
   public Long getId() {
     return id;
   }
