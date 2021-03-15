@@ -6,10 +6,12 @@ import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.geekbrains.ProductRepr;
 import ru.geekbrains.ProductService;
+import ru.geekbrains.rest.ProductServiceRest;
 import ru.geekbrains.service.ProductServiceRemote;
 import ru.geekbrains.entity.Category;
 import ru.geekbrains.entity.Product;
@@ -18,7 +20,7 @@ import ru.geekbrains.repository.ProductRepository;
 
 @Stateless
 @Remote(ProductServiceRemote.class)
-public class ProductServiceImpl implements ProductService, ProductServiceRemote {
+public class ProductServiceImpl implements ProductService, ProductServiceRemote, ProductServiceRest {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
@@ -49,10 +51,26 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote 
         return productRepository.countAll();
     }
 
+    @Override
+    public void insert(ProductRepr product) {
+        if (product.getId() != null) {
+            throw new IllegalArgumentException();
+        }
+        saveOrUpdate(product);
+    }
+
+    @Override
+    public void update(ProductRepr product) {
+        if (product.getId() == null) {
+            throw new IllegalArgumentException();
+        }
+        saveOrUpdate(product);
+    }
+
     @TransactionAttribute
     @Override
     public void saveOrUpdate(ProductRepr product) {
-        logger.info("Saving product with id {}" , product.getId());
+        logger.info("Saving product with id {}", product.getId());
 
         Category category = null;
         if (product.getCategoryId() != null) {

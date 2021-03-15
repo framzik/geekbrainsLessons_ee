@@ -1,0 +1,14 @@
+GET http://127.0.0.1:8080/first-jsf-app/api/v1/product/count
+###
+GET http://127.0.0.1:8080/first-jsf-app/api/v1/product
+###
+POST http://127.0.0.1:8080/first-jsf-app/api/v1/product/
+Content-Type: application/json
+
+{
+    "categoryId": 1,
+    "categoryName": "Велосипеды",
+    "description": "Product from Rest",
+    "name": "Product from Rest",
+    "price": 800.00
+  }
