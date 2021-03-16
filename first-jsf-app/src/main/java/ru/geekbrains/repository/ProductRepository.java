@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.geekbrains.entity.Category;
 import ru.geekbrains.entity.Product;
 
 @Stateless
@@ -22,7 +23,10 @@ public class ProductRepository {
   }
 
   public Product findById(Long id) {
-    return em.find(Product.class, id);
+
+    return em.createNamedQuery("findById",Product.class )
+            .setParameter("id",id)
+            .getSingleResult();
   }
 
   public Long countAll() {
@@ -41,5 +45,16 @@ public class ProductRepository {
     em.createNamedQuery("deleteById")
         .setParameter("id", id)
         .executeUpdate();
+  }
+
+    public Product findByName(String name) {
+      return em.createNamedQuery("findByName",Product.class )
+              .setParameter("name",name)
+              .getSingleResult();
+    }
+  public List<Product> getAllProducts(Category category) {
+    return em.createNamedQuery("getAllProductsByCategory", Product.class)
+            .setParameter("category", category)
+            .getResultList();
   }
 }

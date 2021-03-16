@@ -20,6 +20,11 @@ public interface ProductServiceRest {
     ProductRepr findById(@PathParam("id") Long id);
 
     @GET
+    @Path("/name/{name}")
+    @Produces(MediaType.APPLICATION_JSON)
+    ProductRepr findByName(@PathParam("name") String name);
+
+    @GET
     @Path("/count")
     @Produces(MediaType.APPLICATION_JSON)
     Long countAll();
@@ -34,5 +39,10 @@ public interface ProductServiceRest {
 
     @DELETE
     @Path("/{id}")
-    void deleteById(Long id);
+    void deleteById(@PathParam("id") Long id);
+
+    @GET
+    @Path("/fromCategory/{categoryId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    List<ProductRepr> getAllProductFromCategoryId(@PathParam("categoryId") Long categoryId);
 }

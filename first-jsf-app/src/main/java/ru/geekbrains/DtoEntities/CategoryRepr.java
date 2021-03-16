@@ -1,8 +1,9 @@
 package ru.geekbrains.DtoEntities;
 
-import java.util.List;
 import ru.geekbrains.entity.Category;
 import ru.geekbrains.entity.Product;
+
+import java.util.List;
 
 public class CategoryRepr {
 

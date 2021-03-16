@@ -10,42 +10,59 @@ import ru.geekbrains.CategoryService;
 import ru.geekbrains.DtoEntities.CategoryRepr;
 import ru.geekbrains.entity.Category;
 import ru.geekbrains.repository.CategoryRepository;
+import ru.geekbrains.rest.CategoryServiceRest;
 
 @Stateless
-public class CategoryServiceImpl implements CategoryService {
+public class CategoryServiceImpl implements CategoryService, CategoryServiceRest {
 
-  @EJB
-  private CategoryRepository categoryRepository;
+    @EJB
+    private CategoryRepository categoryRepository;
 
-  @Override
-  public List<CategoryRepr> findAll() {
-    return categoryRepository.findAll().stream().map(CategoryRepr::new).collect(
-        Collectors.toList());
-  }
-
-  @Override
-  public CategoryRepr findById(Long id) {
-    Category category = categoryRepository.findById(id);
-    if (category != null) {
-      return new CategoryRepr(category);
+    @Override
+    public List<CategoryRepr> findAll() {
+        return categoryRepository.findAll().stream().map(CategoryRepr::new).collect(
+                Collectors.toList());
     }
-    return null;
-  }
 
-  @Override
-  @TransactionAttribute
-  public void saveOrUpdate(CategoryRepr categoryRepr) {
-    categoryRepository.saveOrUpdate(new Category(categoryRepr) );
-  }
+    @Override
+    public CategoryRepr findById(Long id) {
+        Category category = categoryRepository.findById(id);
+        if (category != null) {
+            return new CategoryRepr(category);
+        }
+        return null;
+    }
 
-  @Override
-  @TransactionAttribute
-  public void deleteById(Long id) {
-    categoryRepository.deleteById(id);
-  }
+    @Override
+    public void insert(CategoryRepr category) {
+        if (category.getId() != null) {
+            throw new IllegalArgumentException();
+        }
+        saveOrUpdate(category);
+    }
 
-  @Override
-  public Long countAll() {
-    return categoryRepository.countAll();
-  }
+    @Override
+    public void update(CategoryRepr category) {
+        if (category.getId() == null) {
+            throw new IllegalArgumentException();
+        }
+        saveOrUpdate(category);
+    }
+
+    @Override
+    @TransactionAttribute
+    public void saveOrUpdate(CategoryRepr categoryRepr) {
+        categoryRepository.saveOrUpdate(new Category(categoryRepr));
+    }
+
+    @Override
+    @TransactionAttribute
+    public void deleteById(Long id) {
+        categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public Long countAll() {
+        return categoryRepository.countAll();
+    }
 }

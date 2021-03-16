@@ -38,8 +38,24 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote,
     }
 
     @Override
+    public List<ProductRepr> getAllProductFromCategoryId(Long categoryId) {
+        Category currentCategory = categoryRepository.findById(categoryId);
+        return productRepository.getAllProducts(currentCategory).stream().map(this::buildProductRepr).collect(
+                Collectors.toList());
+    }
+
+    @Override
     public ProductRepr findById(Long id) {
         Product product = productRepository.findById(id);
+        if (product != null) {
+            return buildProductRepr(product);
+        }
+        return null;
+    }
+
+    @Override
+    public ProductRepr findByName(String name) {
+        Product product = productRepository.findByName(name);
         if (product != null) {
             return buildProductRepr(product);
         }
