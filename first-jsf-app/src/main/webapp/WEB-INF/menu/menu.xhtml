@@ -8,21 +8,36 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <h:link styleClass="nav-link" value="Главная" outcome="index"/>
+                    <h:link styleClass="nav-link" value="Главная" outcome="/index"/>
                 </li>
                 <li class="nav-item">
-                    <h:link styleClass="nav-link" value="Товары" outcome="product"/>
+                    <h:link styleClass="nav-link" value="Товары" outcome="/product"/>
                 </li>
                 <li class="nav-item">
-                    <h:link styleClass="nav-link" value="Пользователи" outcome="user"/>
+                    <h:link styleClass="nav-link" value="Пользователи" outcome="/user"/>
                 </li>
                 <li class="nav-item">
-                    <h:link styleClass="nav-link" value="Категории" outcome="category"/>
+                    <h:link styleClass="nav-link" value="Категории" outcome="/category"/>
                 </li>
                 <li class="nav-item">
-                    <h:link styleClass="nav-link" value="Корзина" outcome="cart"/>
+                    <h:link styleClass="nav-link" value="Корзина" outcome="/cart"/>
+                </li>
+                <li class="nav-item">
+                    <h:link styleClass="nav-link" value="User2" outcome="/admin/user2"/>
+                </li>
+                <li class="nav-item">
+                    <h:link styleClass="nav-link" value="Role" outcome="/admin/role"/>
                 </li>
 
+                <li class="nav-item">
+                    <h:form rendered="#{request.userPrincipal != null}">
+                        <h:commandButton action="#{productController.logout()}" value="Logout #{request.userPrincipal.name}" />
+                    </h:form>
+                    <h:link styleClass="nav-link"
+                            rendered="#{request.userPrincipal == null}"
+                            value="Login"
+                            outcome="/login"/>
+                </li>
             </ul>
         </div>
     </div>

@@ -3,6 +3,9 @@ package ru.geekbrains.DtoEntities;
 
 import ru.geekbrains.entity.User;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class UserRepr {
 
   private Long id;
@@ -10,14 +13,21 @@ public class UserRepr {
   private String phone;
   private String email;
 
+  private String login;
+
+  private String password;
+
+  private Set<RoleRepr> roles;
+
   public UserRepr() {
   }
 
   public UserRepr(User user) {
-    id = user.getId();
-    name = user.getName();
-    phone = user.getPhone();
-    email = user.getEmail();
+    this.id = user.getId();
+    this.login = user.getLogin();
+    this.password = user.getPassword();
+    this.roles = new HashSet<>();
+    user.getRoles().forEach(r -> this.roles.add(new RoleRepr(r)));
   }
 
   public Long getId() {
@@ -50,5 +60,36 @@ public class UserRepr {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+  public String getLogin() {
+    return login;
+  }
+
+  public void setLogin(String login) {
+    this.login = login;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public Set<RoleRepr> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(Set<RoleRepr> roles) {
+    this.roles = roles;
+  }
+
+  @Override
+  public String toString() {
+    return "UserRepr{" +
+            "id=" + id +
+            ", login='" + login + '\'' +
+            '}';
   }
 }

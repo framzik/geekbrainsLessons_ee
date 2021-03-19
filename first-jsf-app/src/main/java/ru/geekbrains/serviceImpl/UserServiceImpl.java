@@ -34,7 +34,8 @@ public class UserServiceImpl implements UserService {
   @Override
   @TransactionAttribute
   public void saveOrUpdate(UserRepr user) {
-    userRepository.saveOrUpdate(new User(user));
+    User saved = userRepository.saveOrUpdate(new User(user));
+    user.setId(saved.getId());
   }
 
   @Override
@@ -45,6 +46,13 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Long countAll() {
-    return userRepository.countAll();
+    return userRepository.getCount();
+  }
+
+  @TransactionAttribute
+  public List<UserRepr> getAllUsers() {
+    return userRepository.findAll().stream()
+            .map(UserRepr::new)
+            .collect(Collectors.toList());
   }
 }

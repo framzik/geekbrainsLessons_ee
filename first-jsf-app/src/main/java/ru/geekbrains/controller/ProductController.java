@@ -6,7 +6,10 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ComponentSystemEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
+
 import ru.geekbrains.CategoryService;
 import ru.geekbrains.DtoEntities.CategoryRepr;
 import ru.geekbrains.ProductService;
@@ -21,6 +24,9 @@ public class ProductController implements Serializable {
 
   @EJB
   private CategoryService categoryService;
+
+  @Inject
+  private HttpSession httpSession;
 
   private ProductRepr product;
 
@@ -70,6 +76,12 @@ public class ProductController implements Serializable {
 
   public void setCategories(List<CategoryRepr> categories) {
     this.categories = categories;
+  }
+
+  public String logout() {
+    //HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+    httpSession.invalidate();
+    return "/product.xhtml?faces-redirect=true";
   }
 }
 
