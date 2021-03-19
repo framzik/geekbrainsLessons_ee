@@ -19,7 +19,7 @@
 
 <h:body>
     <ui:insert name="header">
-        <ui:include src="WEB-INF/menu/menu.xhtml"/>
+        <ui:include src="/WEB-INF/menu/menu.xhtml"/>
     </ui:insert>
     <f:event listener="#{userController.preloadData}" type="preRenderView"/>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -67,6 +67,14 @@
                         <h:column>
                             <f:facet name="header">Email</f:facet>
                             #{user.email}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Login</f:facet>
+                            #{user.login}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Password</f:facet>
+                            #{user.password}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Action</f:facet>

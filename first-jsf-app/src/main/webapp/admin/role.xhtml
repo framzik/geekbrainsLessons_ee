@@ -22,8 +22,44 @@
         <ui:include src="/WEB-INF/menu/menu.xhtml"/>
     </ui:insert>
 
+
     <div class="container">
-        Role List
+        <div class="row py-2">
+            <h:form id="roleForm">
+                <div class="col-12">
+                    <h:commandButton value="Add Role" styleClass="btn btn-primary"
+                                     action="#{roleController.createRole()}"/>
+                </div>
+                <div class="col-12">
+                    <h:dataTable value="#{roleController.allRoles}" var="role"
+                                 styleClass="table table-bordered my-2">
+                        <h:column>
+                            <f:facet name="header">Id</f:facet>
+                            #{role.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            #{role.name}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Actions</f:facet>
+
+                            <h:commandButton value="Edit" styleClass="btn btn-success"
+                                             action="#{productController.editProduct(role)}"/>
+                            <h:commandButton value="Delete" styleClass="btn btn-danger"
+                                             action="#{productController.deleteProduct(role)}">
+                                <f:ajax event="click" render="productForm"/>
+                            </h:commandButton>
+                            <h:commandButton value="Add to cart" styleClass="btn btn-success"
+                                             action="#{cartController.addToCart(role)}"/>
+                        </h:column>
+                    </h:dataTable>
+
+                </div>
+
+            </h:form>
+        </div>
     </div>
 
 </h:body>

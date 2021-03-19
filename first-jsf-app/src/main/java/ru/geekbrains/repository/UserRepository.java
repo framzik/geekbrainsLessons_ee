@@ -26,14 +26,14 @@ public class UserRepository implements Serializable {
     }
 
     public List<User> findAll() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> query = cb.createQuery(User.class);
-        Root<User> from = query.from(User.class);
-        from.fetch("roles", JoinType.LEFT);
-        query.select(from).distinct(true);
-
-        return em.createQuery(query).getResultList();
-        //return em.createNamedQuery("findAllUsers", User.class).getResultList();
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<User> query = cb.createQuery(User.class);
+//        Root<User> from = query.from(User.class);
+//        from.fetch("roles", JoinType.LEFT);
+//        query.select(from).distinct(true);
+//
+//        return em.createQuery(query).getResultList();
+        return em.createNamedQuery("findAllUsers", User.class).getResultList();
     }
 
     public User findById(Long id) {
