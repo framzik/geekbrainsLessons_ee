@@ -21,7 +21,7 @@
     <ui:insert name="header">
         <ui:include src="/WEB-INF/menu/menu.xhtml"/>
     </ui:insert>
-
+    <f:event listener="#{roleController.preloadData}" type="preRenderView"/>
 
     <div class="container">
         <div class="row py-2">
@@ -31,7 +31,7 @@
                                      action="#{roleController.createRole()}"/>
                 </div>
                 <div class="col-12">
-                    <h:dataTable value="#{roleController.allRoles}" var="role"
+                    <h:dataTable value="#{roleController.all}" var="role"
                                  styleClass="table table-bordered my-2">
                         <h:column>
                             <f:facet name="header">Id</f:facet>
@@ -46,13 +46,12 @@
                             <f:facet name="header">Actions</f:facet>
 
                             <h:commandButton value="Edit" styleClass="btn btn-success"
-                                             action="#{productController.editProduct(role)}"/>
+                                             action="#{roleController.editRole(role)}"/>
                             <h:commandButton value="Delete" styleClass="btn btn-danger"
-                                             action="#{productController.deleteProduct(role)}">
-                                <f:ajax event="click" render="productForm"/>
+                                             action="#{roleController.deleteRole(role)}">
+                                <f:ajax event="click" render="roleForm"/>
                             </h:commandButton>
-                            <h:commandButton value="Add to cart" styleClass="btn btn-success"
-                                             action="#{cartController.addToCart(role)}"/>
+
                         </h:column>
                     </h:dataTable>
 

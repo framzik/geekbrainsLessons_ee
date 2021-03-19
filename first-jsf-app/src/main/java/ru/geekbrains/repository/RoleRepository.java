@@ -23,7 +23,7 @@ public class RoleRepository {
         return em.merge(role);
     }
 
-    public Role findById(int id) {
+    public Role findById(Long id) {
         return em.find(Role.class, id);
     }
 
@@ -34,5 +34,28 @@ public class RoleRepository {
     public long getCount() {
         return em.createQuery("select count(*) from Role", Long.class)
                 .getSingleResult();
+    }
+
+    public Role saveOrUpdate(Role role) {
+        if (role.getId() == null) {
+            em.persist(role);
+            return role;
+        }
+        return em.merge(role);
+    }
+
+    public void deleteById(Long id) {
+//        try {
+//            Role attached = findById(id);
+//            if (attached != null) {
+//                em.remove(attached);
+//            }
+//        } catch (Exception ex) {
+//            logger.error("Error with entity class", ex);
+//            throw new IllegalStateException(ex);
+//        }
+        em.createQuery("delete from Role r where r.id=:id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 }

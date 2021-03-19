@@ -49,10 +49,4 @@ public class UserServiceImpl implements UserService {
     return userRepository.getCount();
   }
 
-  @TransactionAttribute
-  public List<UserRepr> getAllUsers() {
-    return userRepository.findAll().stream()
-            .map(UserRepr::new)
-            .collect(Collectors.toList());
-  }
 }
