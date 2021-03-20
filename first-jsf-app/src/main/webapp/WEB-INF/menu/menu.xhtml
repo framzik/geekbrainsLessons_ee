@@ -13,9 +13,7 @@
                 <li class="nav-item">
                     <h:link styleClass="nav-link" value="Товары" outcome="/product"/>
                 </li>
-                <li class="nav-item">
-                    <h:link styleClass="nav-link" value="Пользователи" outcome="/admin/user"/>
-                </li>
+
                 <li class="nav-item">
                     <h:link styleClass="nav-link" value="Категории" outcome="/category"/>
                 </li>
@@ -23,12 +21,18 @@
                     <h:link styleClass="nav-link" value="Корзина" outcome="/cart"/>
                 </li>
                 <li class="nav-item">
-                    <h:link styleClass="nav-link" value="Role" outcome="/admin/role"/>
+                    <h:link rendered="#{request.isUserInRole('ADMIN')}" styleClass="nav-link" value="Пользователи"
+                            outcome="/admin/user"/>
+                </li>
+                <li class="nav-item">
+                    <h:link rendered="#{request.isUserInRole('ADMIN')}" styleClass="nav-link" value="Role"
+                            outcome="/admin/role"/>
                 </li>
 
                 <li class="nav-item">
                     <h:form rendered="#{request.userPrincipal != null}">
-                        <h:commandButton action="#{productController.logout()}" value="Logout #{request.userPrincipal.name}" />
+                        <h:commandButton styleClass="btn btn-primary btn-sm" action="#{productController.logout()}"
+                                         value="Logout #{request.userPrincipal.name}"/>
                     </h:form>
                     <h:link styleClass="nav-link"
                             rendered="#{request.userPrincipal == null}"
