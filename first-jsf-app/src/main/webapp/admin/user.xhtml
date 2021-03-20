@@ -77,6 +77,17 @@
                             #{user.password}
                         </h:column>
                         <h:column>
+                            <f:facet name="header">Role</f:facet>
+                            <h:dataTable value="#{userController.getRoles(user)}" var="role"
+                                         styleClass="table table-bordered my-2">
+                                <h:column>
+                                    #{role.name}
+                                </h:column>
+                            </h:dataTable>
+                        </h:column>
+
+
+                        <h:column>
                             <f:facet name="header">Action</f:facet>
                             <h:commandButton value="Edit" styleClass="btn btn-success"
                                              action="#{userController.editUser(user)}"/>
