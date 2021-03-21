@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import ru.geekbrains.DtoEntities.UserRepr;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -30,7 +31,7 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany(cascade = {
+    @ManyToMany(fetch = FetchType.EAGER,cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
@@ -54,7 +55,10 @@ public class User {
     }
 
     public User(UserRepr userRepr) {
-        this(userRepr.getId(), userRepr.getName(), userRepr.getPhone(), userRepr.getEmail(), userRepr.getLogin(), userRepr.getPassword());
+        this(userRepr.getId(), userRepr.getName(), userRepr.getPhone(), userRepr.getEmail(), userRepr.getLogin(),
+                userRepr.getPassword());
+        this.roles = new HashSet<>();
+        userRepr.getRoles().forEach(r -> roles.add(new Role(r)));
     }
 
     public Long getId() {

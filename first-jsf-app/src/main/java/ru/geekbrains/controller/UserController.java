@@ -1,57 +1,87 @@
 package ru.geekbrains.controller;
 
-import java.io.Serializable;
-import java.util.List;
+import ru.geekbrains.DtoEntities.RoleRepr;
+import ru.geekbrains.DtoEntities.UserRepr;
+import ru.geekbrains.UserService;
+import ru.geekbrains.entity.Role;
+import ru.geekbrains.serviceImpl.RoleService;
+
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ComponentSystemEvent;
-import javax.inject.Inject;
 import javax.inject.Named;
-import ru.geekbrains.entity.User;
-import ru.geekbrains.repository.UserRepository;
+import java.io.Serializable;
+import java.util.List;
 
 @Named
 @SessionScoped
 public class UserController implements Serializable {
 
-  private User user;
-  @Inject
-  private UserRepository userRepository;
+    private UserRepr user;
+    @EJB
+    private UserService userService;
 
-  private List<User> users;
+    @EJB
+    private RoleService roleService;
 
-  public void preloadData(ComponentSystemEvent componentSystemEvent) {
-    users = userRepository.findAll();
-  }
+    private List<UserRepr> users;
+    private List<RoleRepr> roles;
 
-  public User getUser() {
-    return user;
-  }
+    public List<RoleRepr> getRoles() {
+        return roles;
+    }
 
-  public void setUser(User user) {
-    this.user = user;
-  }
+    public List<UserRepr> getUsers() {
+        return users;
+    }
 
-  public List<User> getAllUsers() {
-    return userRepository.findAll();
-  }
+    public void setUsers(List<UserRepr> users) {
+        this.users = users;
+    }
+
+    public void preloadData(ComponentSystemEvent componentSystemEvent) {
+        this.roles = roleService.getAllRoles();
+        this.users = userService.findAll();
+    }
+
+    public UserRepr getUser() {
+        return user;
+    }
+
+    public void setUser(UserRepr user) {
+        this.user = user;
+    }
+
+    public List<UserRepr> getAllUsers() {
+        return users;
+    }
 
 
-  public String editUser(User user) {
-    this.user = user;
-    return "user_form.xhtml?faces-redirect=true";
-  }
+    public String editUser(UserRepr user) {
+        this.user = user;
+        return "user_form.xhtml?faces-redirect=true";
+    }
 
-  public void deleteUser(User user) {
-    userRepository.deleteById(user.getId());
-  }
+    public void deleteUser(UserRepr user) {
+        userService.deleteById(user.getId());
+    }
 
-  public String saveUser() {
-    userRepository.saveOrUpdate(user);
-    return "user.xhtml?faces-redirect=true";
-  }
+    public String saveUser() {
+            userService.merge(this.user);
+//        userService.saveOrUpdate(user);
+        return "user.xhtml?faces-redirect=true";
+    }
 
-  public String createUser() {
-    this.user = new User();
-    return "user_form.xhtml?faces-redirect=true";
-  }
+    public String createUser() {
+        this.user = new UserRepr();
+        return "user_form.xhtml?faces-redirect=true";
+    }
+
+    public List<RoleRepr> getAllRoles() {
+        return roles;
+    }
+
+    public List<Role> getRolesForUser(UserRepr user) {
+        return userService.getRolesForUser(user);
+    }
 }

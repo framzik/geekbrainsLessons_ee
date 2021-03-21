@@ -70,14 +70,23 @@
                                      value="#{userController.user.login}"
                                      placeholder="Enter login"/>
                     </div>
+
                     <div class="form-group">
                         <label>Password</label>
                         <h:inputText  styleClass="form-control" id="password"
                                      value="#{userController.user.password}"
                                      placeholder="Enter Password"/>
                     </div>
+
+                    <label>Role</label>
+                    <div class="form-group">
+                        <h:selectManyCheckbox value="#{userController.user.roles}" layout="pageDirection">
+                            <f:selectItems value="#{userController.allRoles}" />
+                        </h:selectManyCheckbox>
+                    </div>
                     <h:commandButton value="Submit" styleClass="btn btn-primary"
                                      action="#{userController.saveUser()}"/>
+
                 </h:form>
             </div>
         </div>

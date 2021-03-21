@@ -8,6 +8,7 @@ import javax.ejb.TransactionAttribute;
 
 import ru.geekbrains.DtoEntities.UserRepr;
 import ru.geekbrains.UserService;
+import ru.geekbrains.entity.Role;
 import ru.geekbrains.entity.User;
 import ru.geekbrains.repository.UserRepository;
 
@@ -31,12 +32,18 @@ public class UserServiceImpl implements UserService {
     return null;
   }
 
-  @Override
   @TransactionAttribute
-  public void saveOrUpdate(UserRepr user) {
-    User saved = userRepository.saveOrUpdate(new User(user));
-    user.setId(saved.getId());
+  public void merge(UserRepr user) {
+    User merged = userRepository.merge(new User(user));
+    user.setId(merged.getId());
   }
+
+//  @Override
+//  @TransactionAttribute
+//  public void saveOrUpdate(UserRepr user) {
+//    User saved = userRepository.saveOrUpdate(new User(user));
+//    user.setId(saved.getId());
+//  }
 
   @Override
   @TransactionAttribute
@@ -47,6 +54,10 @@ public class UserServiceImpl implements UserService {
   @Override
   public Long countAll() {
     return userRepository.getCount();
+  }
+
+  public List<Role> getRolesForUser(UserRepr user) {
+    return userRepository.getRolesForUser(user);
   }
 
 }

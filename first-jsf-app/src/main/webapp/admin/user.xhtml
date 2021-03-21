@@ -78,7 +78,7 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Role</f:facet>
-                            <h:dataTable value="#{userController.getRoles(user)}" var="role"
+                            <h:dataTable value="#{userController.getRolesForUser(user)}" var="role"
                                          styleClass="table table-bordered my-2">
                                 <h:column>
                                     #{role.name}

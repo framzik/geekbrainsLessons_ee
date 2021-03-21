@@ -38,7 +38,7 @@ public class RoleController implements Serializable {
     }
 
     public List<RoleRepr> getAll() {
-        return roles;
+        return roleService.getAllRoles();
     }
 
     public String editRole(RoleRepr category) {
