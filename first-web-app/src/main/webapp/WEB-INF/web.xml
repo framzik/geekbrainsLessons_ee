@@ -5,14 +5,12 @@
   version="4.0">
 
   <display-name>Archetype Created Web Application</display-name>
-  
-  <servlet>
-    <servlet-name>firstServlet</servlet-name>
-    <servlet-class>ru.khrebtov.FirstServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>firstServlet</servlet-name>
-    <url-pattern>/first-servlet</url-pattern>
-  </servlet-mapping>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/not_found</location>
+  </error-page>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/forbidden</location>
+  </error-page>
 </web-app>
